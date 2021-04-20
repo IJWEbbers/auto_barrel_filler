@@ -13,17 +13,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   4 .debug_aranges 00000030  00000000  00000000  0000016c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000006d4  00000000  00000000  0000019c  2**0
+  5 .debug_info   000006df  00000000  00000000  0000019c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000633  00000000  00000000  00000870  2**0
+  6 .debug_abbrev 00000633  00000000  00000000  0000087b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000213  00000000  00000000  00000ea3  2**0
+  7 .debug_line   00000219  00000000  00000000  00000eae  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000044  00000000  00000000  000010b8  2**2
+  8 .debug_frame  00000044  00000000  00000000  000010c8  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000362  00000000  00000000  000010fc  2**0
+  9 .debug_str    00000376  00000000  00000000  0000110c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000020  00000000  00000000  0000145e  2**0
+ 10 .debug_ranges 00000020  00000000  00000000  00001482  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -70,16 +70,17 @@ Disassembly of section .text:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000080 <floatSwitchInit>:
-
 #include <avr/io.h>
 
 void floatSwitchInit(void)
 {
+	/* top sensor */
 	DDRD &= ~(1<<0);	//set pinD0 as input
   80:	50 98       	cbi	0x0a, 0	; 10
 	PORTD |= (1<<0); //use pull-up resistor on pinD0
   82:	58 9a       	sbi	0x0b, 0	; 11
 	
+	/* bottom sensor */
 	DDRD &= ~(1<<1);	//set pinD1 as input
   84:	51 98       	cbi	0x0a, 1	; 10
 	PORTD |= (1<<1); //use pull-up resistor on pinD1
@@ -110,19 +111,20 @@ int main(void)
 	
     	while (1)
 	{			
-		//if water is above required level, turn off pump
-		uint8_t floatSwitchState = PIND & (1<<0);
-		if (floatSwitchState == 0)
-  98:	48 99       	sbic	0x09, 0	; 9
-  9a:	02 c0       	rjmp	.+4      	; 0xa0 <main+0x10>
+		//if water is above top level, turn off pump
+		uint8_t top_switch_state = PIND & (1<<0);
+		if (top_switch_state == 0)
+  98:	48 9b       	sbis	0x09, 0	; 9
 		{
-			PORTB &= ~(1<<PORTB1);
-  9c:	29 98       	cbi	0x05, 1	; 5
-  9e:	fc cf       	rjmp	.-8      	; 0x98 <main+0x8>
-			
+			PORTB &= ~(1<<PORTB1);	
+  9a:	29 98       	cbi	0x05, 1	; 5
 		}
+		//if water is below bottom level, turn on pump
 		//else turn on pump
-		else
+		uint8_t bottom_switch_state = PIND & (1<<1);
+		if (bottom_switch_state == 0)
+  9c:	49 99       	sbic	0x09, 1	; 9
+  9e:	fc cf       	rjmp	.-8      	; 0x98 <main+0x8>
 		{
 			PORTB |= (1<<PORTB1);
   a0:	29 9a       	sbi	0x05, 1	; 5

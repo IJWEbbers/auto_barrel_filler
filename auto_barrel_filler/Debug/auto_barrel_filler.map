@@ -369,30 +369,30 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x6d4
+.debug_info     0x00000000      0x6df
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 D:/Atmel/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4       0xe0 main.o
+ .debug_info    0x000005f4       0xeb main.o
 
 .debug_abbrev   0x00000000      0x633
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 D:/Atmel/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2       0x91 main.o
 
-.debug_line     0x00000000      0x213
+.debug_line     0x00000000      0x219
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 D:/Atmel/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000133       0xe0 main.o
+ .debug_line    0x00000133       0xe6 main.o
 
 .debug_frame    0x00000000       0x44
  *(.debug_frame)
  .debug_frame   0x00000000       0x44 main.o
 
-.debug_str      0x00000000      0x362
+.debug_str      0x00000000      0x376
  *(.debug_str)
  .debug_str     0x00000000      0x208 D:/Atmel/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x15a main.o
-                                0x18e (size before relaxing)
+ .debug_str     0x00000208      0x16e main.o
+                                0x1a2 (size before relaxing)
 
 .debug_loc
  *(.debug_loc)
