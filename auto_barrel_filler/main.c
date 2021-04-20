@@ -26,7 +26,7 @@ int main(void)
     	while (1)
 	{			
 		//if water is above required level, turn off pump
-		uint8_t floatSwitchState = PIND & 0x01;
+		uint8_t floatSwitchState = PIND & (1<<0);
 		if (floatSwitchState == 0)
 		{
 			PORTB &= ~(1<<PORTB1);
